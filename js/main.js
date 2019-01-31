@@ -18,4 +18,23 @@ $(function () {
         e.preventDefault();
         $('.steps').children(':last').remove();
     })
+
+    $('#ing-add').on('click', function (e) {
+        e.preventDefault();
+        var D_ing = $('.ingridients').children(':last');
+        var ing_number = D_ing.data('ing');
+        ing_number++;
+        var html = '<div class="ing-item" data-ing="1">' +
+            '            <input type="text" name="ing-name[' +ing_number+']" placeholder="Ингридиент">' +
+            '            <input type="text" name="ing-count[' +ing_number+']" placeholder="Количество">' +
+            '            <input type="text" name="ing-type[' +ing_number+']" placeholder="Тип">' +
+            '        </div>';
+        var new_elem = $(html);
+        $('.ingridients').append(new_elem);
+    });
+
+    $('#ing-del').on('click', function (e) {
+        e.preventDefault();
+        $('.ingridients').children(':last').remove();
+    })
 });

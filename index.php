@@ -1,3 +1,6 @@
+<?php
+    require_once 'recipes.php';
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,6 +11,7 @@
     <title>Document</title>
 </head>
 <body>
+<a href="https://www.cleancss.com/html-beautify/" target="_blank">Выровнять код</a>
 <h3>Скачивание картинок</h3>
 <form action="save_images.php" method="POST">
     <label for="url">Url страницы</label>
@@ -27,6 +31,37 @@
     <label for="title">Title и description</label>
     <input type="text" name="headers" id="headers">
     <br><br>
+
+    <div class="types-multi">
+        <label style="vertical-align: top;" for="type">Основной тип</label>
+        <select  name="type" id="type">
+            <?php foreach ($tipes as $val => $name): ?>
+                <option value="<?= $val ?>"><?= $name ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <br><br>
+    <label for="rate">Оценка</label>
+    <input type="text" name="rate" id="rate" value="6"><br> <br>
+    <div class="types-multi">
+        <label style="vertical-align: top;" for="types">Типы</label>
+        <select style="height: 325px" name="types[]" id="types" multiple>
+            <?php foreach ($tipes as $val => $name): ?>
+                <option value="<?= $val ?>"><?= $name ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <h3>Ингридиенты</h3>
+    <div class="ingridients" style="border: 2px solid red; width: 540px">
+        <div class="ing-item" data-ing="1">
+            <input type="text" name="ing-name[1]" placeholder="Ингридиент">
+            <input type="text" name="ing-count[1]" placeholder="Количество">
+            <input type="text" name="ing-type[1]" placeholder="Тип">
+        </div>
+
+    </div>
+    <a href="#" id="ing-add">Добавить ингридиент</a>
+    <a href="#" id="ing-del">Удалить ингридиент</a>
     <div class="steps">
     <?php for ($i = 1; $i <= 10; $i++): ?>
         <div data-step="<?= $i; ?>" id="fields-step<?= $i ?>">
