@@ -2,13 +2,23 @@
     require_once  'phpQuery/phpQuery.php';
     require_once  'recipes.php';
 
+    $cousines = require_once 'counsines.php';
+    $category_array = require_once ('category.php');
+
     function print_pre($args){
         print '<pre>';
         print_r($args);
         print '</pre>';
     }
 
+    function getTemplate($tpl){
+        return file_get_contents('templates/' . $tpl . '.html');
+    }
+
     $count_step = count($_POST['step']);
+
+
+
 
     $template = file_get_contents('templates/0templates.html');
     $recipe_name = 'omlet-s-syrom';
@@ -16,13 +26,81 @@
 
     $template = str_replace($recipe_name, $recipe_name_new ,$template);
     $template = str_replace('{title}', trim($_POST['headers']), $template);
-    $template = str_replace('{type}', str_replace(',','',$html_types[$_POST['type']]. ','), $template);
+    $template = str_replace('{uc_title}', trim($_POST['uc_title']), $template);
+    $template = str_replace('{second_title}', $_POST['second-title'], $template);
+    $template = str_replace('{photo_title}', $_POST['photo-title'], $template);
+    $template = str_replace('{rec_rate}', $_POST['rate'], $template);
+    $template = str_replace('{count_rates}', $_POST['rate-count'], $template);
 
 
-    $document = phpQuery::newDocument($template);
-    $document->find('.instructions')->find('.content_step')->count();
+    $cous_tpl = file_get_contents('templates/cousine.html');
+    $couses_tpl = '';
+    $i = 1;
+    foreach ($_POST['cousines'] as $cous) {
+        $item = str_replace('{cous_name}', $cousines[$cous]['title'], $cous_tpl);
+        $item = str_replace('{cous_png}', $cousines[$cous]['src'], $item);
+        if(count($_POST['cousines']) == $i)
+             $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item);
+        else
+            $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item) . ',';
+        $couses_tpl .= $item . "\n";
 
-    $content_steps = $document->find('.instructions')->find('.content_step');
+
+        $i++;
+    }
+    $template = str_replace('{cousine_types}', $couses_tpl, $template);
+    /**
+     * Установка основного типа
+    */
+    $cat_tpl = getTemplate('category');
+    $main_cat = str_replace('{categ_title}', $category_array[$_POST['type']]['title'], $cat_tpl);
+    $main_cat = str_replace('{categ_href}',  $category_array[$_POST['type']]['href'], $main_cat);
+    $main_cat = str_replace('{categ_name}',  $category_array[$_POST['type']]['name'], $main_cat);
+
+    $template = str_replace('{type}', $main_cat, $template);
+
+
+    /**
+     * Работа с категориями
+    */
+    $count_category = count($_POST['types']);
+    $categs_tpl = '';
+
+    $i = 1;
+    foreach ($_POST['types'] as $type){
+        $item = str_replace('{categ_title}',$category_array[$type]['title'] , $cat_tpl);
+        $item = str_replace('{categ_href}', $category_array[$type]['href'], $item);
+        $item = str_replace('{categ_name}', $category_array[$type]['name'], $item);
+
+        if($i != $count_category){
+            $item .= ',';
+        }
+        $categs_tpl .= $item . "\n";
+        $i++;
+    }
+    $template = str_replace('{categories}', $categs_tpl, $template);
+
+
+    $step_tpl = getTemplate('step');
+
+    /**
+     * Работа с шагами;
+    */
+    $steps = '';
+    for ($i = 1; $i <= $count_step; $i++){
+        $step = str_replace('{step_number}', $i, $step_tpl);
+        $step = str_replace('{recipe}', $recipe_name_new, $step);
+        $step = str_replace('{step_text}', $_POST['step'][$i], $step);
+        $step = str_replace('{step_title}', $_POST['title'][$i], $step);
+        $steps .= $step . "\n";
+    }
+    $template = str_replace('{steps}', $steps, $template);
+
+    /**
+     * Работа с рейтингом;
+     */
+
+
 
     if(preg_match('/\./', $_POST['rate'])){
         $type_rate = 'float';
@@ -30,73 +108,40 @@
         $type_rate = 'int';
     }
     $flag_half = false;
-$document->find('span.rating')->append("\n");
+
+    $star_tpl = getTemplate('rate');
+    $stars_list = '';
+
     for($i = 1; $i <= 10; $i++){
         if($i <= $_POST['rate']){
            $r = 'on';
-
         } else if($i > $_POST['rate'] && $type_rate == 'float' && !$flag_half){
             $flag_half = true;
-            $t = 'half';
+            $r = 'half';
         } else{
             $r = 'off';
         }
-        $str = '<span><img src="http://rf-stone.ru/images/stars_crystal/rating_'.$r.'.png"/></span>';
+        $str = str_replace('{rating_type}', $r, $star_tpl);
         $str .= "\n";
-        $document->find('span.rating')->append($str );
+        $stars_list .= $str;
     }
+    $template = str_replace('{rating_stars}', $stars_list, $template);
+
     /**
-     * Заполняем категории;
+     * Заполняем ингридиенты;
     */
     $count_ing = count($_POST['ing-name']);
+    $ingriditnts = '';
+    $ing_tpl = getTemplate('ingridient');
+
+
     for($i = 1; $i <= $count_ing; $i++){
-        $ing_str = '<li class="ingredient"><span class="name">'.$_POST['ing-name'][$i].' </span> - <span class="value">'.$_POST['ing-count'][$i].'</span> <span class="type">'.$_POST['ing-type'][$i].'</span></li>';
-        $document->find('.content_step')->
-            find('ul.rec')->append($ing_str . "\n");
+        $ing_item = str_replace('{ing_name}', $_POST['ing-name'][$i], $ing_tpl);
+        $ing_item = str_replace('{ing_value}', $_POST['ing-count'][$i], $ing_item);
+        $ing_item = str_replace('{ing_type}', $_POST['ing-type'][$i], $ing_item);
+        $ing_item .= "\n";
+        $ingriditnts .= $ing_item;
     }
+    $template = str_replace('{ingridients}', $ingriditnts, $template);
 
-    $i = 1;
-    $count_category = count($_POST['types']);
-    foreach ($_POST['types'] as $type){
-        if($i == $count_category){
-            $document->find('span.category')->append(str_replace(',','',$html_types[$type]. ',') . "\n");
-        } else{
-            $document->find('span.category')->append($html_types[$type] . "\n");
-        }
-        $i++;
-    }
-
-    if($count_step < 10){
-        $diff = 10 - $count_step;
-        for($d = 0; $d < $diff; $d++){
-            $document->find('.instructions')->find('.content_step:last')->remove();
-        }
-    }
-
-    /**
-     * Заполняем инигридиенты;
-    */
-
-
-    for ($i = 1; $i <= $count_step; $i++){
-        $document->find('.instructions')->find('.content_step')->eq($i-1)->
-             find('.instruction')->text($_POST['step'][$i]);
-        $document->find('.instructions')->find('.content_step')->eq($i-1)->
-        find('img')->attr('title',$_POST['title'][$i]);
-        $document->find('.instructions')->find('.content_step')->eq($i-1)->
-        find('img')->attr('alt',$_POST['title'][$i]);
-        if($i > 10){
-            $content_step = '<div class="content_step"><p></p>
-								<ul>
-									<li><strong>Шаг '. $i .'</strong>
-									<span class="instruction">'.$_POST['step'][$i].'</span>
-									<a href="http://rf-stone.ru/images/recipes/'. $recipe_name_new.'/'.$i.'-1.JPG" class="highslide-image" onclick=""><img class="photo aligncenter size-large wp-image-4939" 
-									title="'.$_POST['title'][$i].'" alt="'.$_POST['title'][$i].'" src="http://rf-stone.ru/images/recipes/'. $recipe_name_new.'/'.$i.'.JPG" width="320" height="240" align="right"></a></li>
-								</ul>
-							<p></p>
-							</div>';
-            $document->find('.instructions')->append($content_step . "\n");
-
-        }
-    }
-    file_put_contents('file.html', $document);
+    file_put_contents('file.html', $template);

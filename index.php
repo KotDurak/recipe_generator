@@ -1,5 +1,7 @@
 <?php
     require_once 'recipes.php';
+    $types = require_once 'counsines.php';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,7 +13,7 @@
     <title>Document</title>
 </head>
 <body>
-<a style="color:red" href="https://www.cleancss.com/html-beautify/" target="_blank">Выровнять код</a>
+
 <h3>Скачивание картинок</h3>
 <form action="save_images.php" method="POST">
     <label for="url">Url страницы</label>
@@ -27,36 +29,61 @@
 <form action="generate.php" method="post">
     <label for="name">Название (на английском)</label>
     <input type="text" name="name" id="name">
-    <br><br>
+
     <label for="title">Title и description</label>
     <input type="text" name="headers" id="headers">
+
+    <label for="uc_title">Название (на русском)</label>
+    <input type="text" name="uc_title" id="uc_title">
+    <br><br>
+    <label for="second-title">Второй название (которое ниже главного)</label>
+    <input type="text" name="second-title" id="second-title">
+
+    <label for="photo-title">Название у финального фото</label>
+    <input type="text" name="photo-title" id="photo-title">
+
     <br><br>
 
     <div class="types-multi">
         <label style="vertical-align: top;" for="type">Основной тип</label>
-        <select  name="type" id="type">
-            <?php foreach ($tipes as $val => $name): ?>
-                <option value="<?= $val ?>"><?= $name ?></option>
+        <select  name="type" id="type" style="">
+            <?php foreach (require ('category.php')as $val => $cat): ?>
+                <option value="<?= $val ?>"><?= $cat['name'] ?></option>
             <?php endforeach; ?>
         </select>
     </div>
     <br><br>
     <label for="rate">Оценка</label>
-    <input type="text" name="rate" id="rate" value="6"><br> <br>
-    <div class="types-multi">
-        <label style="vertical-align: top;" for="types">Типы</label>
-        <select style="height: 325px" name="types[]" id="types" multiple>
-            <?php foreach ($tipes as $val => $name): ?>
-                <option value="<?= $val ?>"><?= $name ?></option>
+    <input type="text" name="rate" id="rate" value="6">
+    <label for="rate-count">Количество оценок</label>
+    <input type="text" name="rate-count" id="rate-count">
+    <br> <br>
+    <div class="cousines" style="margin-bottom: 5px">
+        <label class="hide" style="vertical-align: top;">Кухни мира</label>
+        <select name="cousines[]" id="cous"  style="height: 400px;" multiple>
+            <?php foreach ($types as $idx => $cousine):  ?>
+                <option value="<?= $idx?>"><?= $cousine['title']; ?></option>
             <?php endforeach; ?>
         </select>
     </div>
+    <div class="types-multi">
+        <label style="vertical-align: top;" for="types">Типы</label>
+        <select style="height: 325px" name="types[]" id="types" multiple>
+            <?php foreach (require ('category.php')as $val => $cat): ?>
+                <option value="<?= $val ?>"><?= $cat['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <label for="hours">Время приготовления</label>
+    <input type="text" name="hours" id="hours" placeholder="Часов">
+    <input type="text" name="minutes" id="minutes" placeholder="Минут">
     <h3>Ингридиенты</h3>
+    <textarea name="" id="" cols="50" rows="10"></textarea>
     <div class="ingridients" style="border: 2px solid red; width: 540px">
         <div class="ing-item" data-ing="1">
             <input type="text" name="ing-name[1]" placeholder="Ингридиент">
             <input type="text" name="ing-count[1]" placeholder="Количество">
-            <input type="text" name="ing-type[1]" placeholder="Тип">
+            <input type="text" name="ing-type[1]" placeholder="Тип" class="ing-type">
         </div>
 
     </div>

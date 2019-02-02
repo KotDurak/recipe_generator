@@ -19,12 +19,12 @@ $(function () {
         $('.steps').children(':last').remove();
     })
 
-    $('#ing-add').on('click', function (e) {
+    $('body').on('click', '#ing-add', function (e) {
         e.preventDefault();
         var D_ing = $('.ingridients').children(':last');
         var ing_number = D_ing.data('ing');
         ing_number++;
-        var html = '<div class="ing-item" data-ing="1">' +
+        var html = '<div class="ing-item" data-ing="'+ing_number+'">' +
             '            <input type="text" name="ing-name[' +ing_number+']" placeholder="Ингридиент">' +
             '            <input type="text" name="ing-count[' +ing_number+']" placeholder="Количество">' +
             '            <input type="text" name="ing-type[' +ing_number+']" placeholder="Тип">' +
@@ -36,5 +36,9 @@ $(function () {
     $('#ing-del').on('click', function (e) {
         e.preventDefault();
         $('.ingridients').children(':last').remove();
-    })
+    });
+
+    $('body').on('keypress', '.ing-type', function(e){
+       console.log(e);
+    });
 });
