@@ -11,7 +11,7 @@
     <title>Document</title>
 </head>
 <body>
-<a href="https://www.cleancss.com/html-beautify/" target="_blank">Выровнять код</a>
+<a style="color:red" href="https://www.cleancss.com/html-beautify/" target="_blank">Выровнять код</a>
 <h3>Скачивание картинок</h3>
 <form action="save_images.php" method="POST">
     <label for="url">Url страницы</label>
