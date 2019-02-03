@@ -106,7 +106,7 @@
     <?php for ($i = 1; $i <= 10; $i++): ?>
         <div data-step="<?= $i; ?>" id="fields-step<?= $i ?>">
             <label for="step[<?= $i; ?>]">Шаг <?= $i; ?></label>
-            <input type="text" name="step[<?= $i; ?>]" id="step[<?= $i; ?>]" placeholder="Название шаша">
+            <input type="text" name="step[<?= $i; ?>]" id="step[<?= $i; ?>]" placeholder="Название шага">
             <input type="text" name="title[<?= $i ?>]" placeholder="Атрибуты alt и title">
             <br><br>
         </div>
