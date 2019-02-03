@@ -11,6 +11,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
@@ -74,19 +75,30 @@
             <?php endforeach; ?>
         </select>
     </div>
+    <label for="items-count">Количество порций</label>
+    <input type="text" name="items-count" id="items-count" value="6">
+
     <label for="hours">Время приготовления</label>
     <input type="text" name="hours" id="hours" placeholder="Часов">
     <input type="text" name="minutes" id="minutes" placeholder="Минут">
+
+    <label for="time-link">Ссылка на категорию времени</label>
+    <select name="time-link" id="time-link">
+        <?php foreach (require 'times.php' as $link => $name): ?>
+            <option value="<?= $link ?>"><?= $name ?></option>
+        <?php endforeach; ?>
+    </select>
+
     <h3>Ингридиенты</h3>
-    <textarea name="" id="" cols="50" rows="10"></textarea>
-    <div class="ingridients" style="border: 2px solid red; width: 540px">
+    <textarea name="" id="" cols="50" rows="10"></textarea><br>
+    <div class="ingridients" style="border: 2px solid red;">
         <div class="ing-item" data-ing="1">
             <input type="text" name="ing-name[1]" placeholder="Ингридиент">
             <input type="text" name="ing-count[1]" placeholder="Количество">
             <input type="text" name="ing-type[1]" placeholder="Тип" class="ing-type">
         </div>
-
     </div>
+    <br>
     <a href="#" id="ing-add">Добавить ингридиент</a>
     <a href="#" id="ing-del">Удалить ингридиент</a>
     <div class="steps">

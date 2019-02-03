@@ -132,10 +132,10 @@
 				</li>
 
 				<div class="moduletable">
-					<li><strong>Кол-во порций</strong> – <span class="yield"><img src="http://rf-stone.ru/images/harakteristiki/slice.png" width="25" height="25">6</span>.</li>
+					<li><strong>Кол-во порций</strong> – <span class="yield"><img src="http://rf-stone.ru/images/harakteristiki/slice.png" width="25" height="25">{items_count}</span>.</li>
 				</div>
 				<div class="moduletable">
-					<li><strong>Время приготовления</strong> – <span class="duration"><img src="http://rf-stone.ru/images/harakteristiki/clock.png" width="25" height="25"><a href="http://rf-stone.ru/category/vremya/45-min.html" title="ШАБЛОН минут">1 час 40 мин.</a><span class="value-title" title="PT1H40M"></span></span></li>
+					<li><strong>Время приготовления</strong> – <span class="duration"><img src="http://rf-stone.ru/images/harakteristiki/clock.png" width="25" height="25"><a href="http://rf-stone.ru/category/vremya/{time_link}.html" title="{word_hours} {word_minutes}">{word_hours} {short_minutes}</a><span class="value-title" title="PT{seo_hours}{seo_minutes}"></span></span></li>
 				</div>
 				<div class="moduletable">
 					<li><strong>Вид кухни:</strong> 
@@ -152,7 +152,7 @@
 				<p><strong>Ингредиенты:</strong><br>
 
 					<div class="content_step"><br>
-						<a href="http://rf-stone.ru/images/recipes/omlet-s-syrom/0-1.JPG" class="highslide-image"><img   alt="Ингредиенты приготовления ШАБЛОН" src="http://rf-stone.ru/images/recipes/omlet-s-syrom/0.JPG" width="320" height="240" align="right" /></a>
+						<a href="http://rf-stone.ru/images/recipes/omlet-s-syrom/0-1.JPG" class="highslide-image"><img   alt="Ингредиенты приготовления {second_title}" src="http://rf-stone.ru/images/recipes/omlet-s-syrom/0.JPG" width="320" height="240" align="right" /></a>
 						<ul class="rec">
 							{ingridients}
 						</ul>

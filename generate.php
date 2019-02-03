@@ -15,6 +15,29 @@
         return file_get_contents('templates/' . $tpl . '.html');
     }
 
+    function num2word($num, $words)
+    {
+        if(!$num){
+            return null;
+        }
+        $num = $num % 100;
+        if ($num > 19) {
+            $num = $num % 10;
+        }
+        switch ($num) {
+            case 1: {
+                return($words[0]);
+            }
+            case 2: case 3: case 4: {
+            return($words[1]);
+        }
+            default: {
+                return($words[2]);
+            }
+        }
+    }
+    $hours_words = array('час', 'часа', 'часов');
+    $hours_minutes = array('минута', 'минуты', 'минут');
     $count_step = count($_POST['step']);
 
 
@@ -31,7 +54,8 @@
     $template = str_replace('{photo_title}', $_POST['photo-title'], $template);
     $template = str_replace('{rec_rate}', $_POST['rate'], $template);
     $template = str_replace('{count_rates}', $_POST['rate-count'], $template);
-
+    $template = str_replace('{items_count}', $_POST['items-count'], $template);
+    $template = str_replace('{time_link}', $_POST['time-link'], $template);
 
     $cous_tpl = file_get_contents('templates/cousine.html');
     $couses_tpl = '';
@@ -42,8 +66,8 @@
         if(count($_POST['cousines']) == $i)
              $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item);
         else
-            $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item) . ',';
-        $couses_tpl .= $item . "\n";
+            $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item) . ',' . "\n";
+        $couses_tpl .= $item;
 
 
         $i++;
@@ -73,13 +97,39 @@
         $item = str_replace('{categ_name}', $category_array[$type]['name'], $item);
 
         if($i != $count_category){
-            $item .= ',';
+            $item .= ',' . "\n";
         }
-        $categs_tpl .= $item . "\n";
+        $categs_tpl .= $item;
         $i++;
     }
     $template = str_replace('{categories}', $categs_tpl, $template);
 
+
+    /**
+     * Работа со времеем приготовления
+    */
+    $time_hours = trim($_POST['hours'] . ' ' . num2word($_POST['hours'], $hours_words));
+    $time_minutes = trim($_POST['minutes'] . ' ' . num2word($_POST['minutes'], $hours_minutes));
+
+    $short_minutes = ($_POST['minutes']) ? $_POST['minutes'] . ' мин.' : '';
+
+    if($_POST['hours']){
+        $seo_hours = $_POST['hours'].'H';
+    } else{
+        $seo_hours = '';
+    }
+
+    if($_POST['minutes']){
+        $seo_minutes = $_POST['minutes'] . 'M';
+    } else{
+        $seo_minutes = '';
+    }
+
+    $template = str_replace('{word_hours}', $time_hours, $template);
+    $template = str_replace('{word_minutes}', $time_minutes, $template);
+    $template = str_replace('{short_minutes}', $short_minutes, $template);
+    $template = str_replace('{seo_hours}', $seo_hours, $template);
+    $template = str_replace('{seo_minutes}', $seo_minutes, $template);
 
     $step_tpl = getTemplate('step');
 
@@ -99,7 +149,6 @@
     /**
      * Работа с рейтингом;
      */
-
 
 
     if(preg_match('/\./', $_POST['rate'])){
@@ -139,9 +188,23 @@
         $ing_item = str_replace('{ing_name}', $_POST['ing-name'][$i], $ing_tpl);
         $ing_item = str_replace('{ing_value}', $_POST['ing-count'][$i], $ing_item);
         $ing_item = str_replace('{ing_type}', $_POST['ing-type'][$i], $ing_item);
-        $ing_item .= "\n";
+        if($i != $count_ing)
+            $ing_item .= "\n";
         $ingriditnts .= $ing_item;
     }
     $template = str_replace('{ingridients}', $ingriditnts, $template);
 
-    file_put_contents('file.html', $template);
+    file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
+
+    /**
+     * Сформируем html для категорийной страницы;
+    */
+    $portions = array('порция', 'порции', 'порций');
+    $portions_str = $_POST['items-count'] . ' ' . num2word($_POST['items-count'], $portions);
+    $tpl = getTemplate('tpl_for_categories');
+    $tpl = str_replace('{new_addr}', $recipe_name_new, $tpl);
+    $tpl = str_replace('{word_hours}', $time_hours, $tpl);
+    $tpl = str_replace('{word_minutes}', $time_minutes, $tpl);
+    $tpl = str_replace('{count_porions}', $portions_str, $tpl);
+    $tpl = str_replace('{name}', trim($_POST['uc_title']), $tpl);
+    file_put_contents('recipes/' . $recipe_name_new . '_category.html', $tpl);
