@@ -315,7 +315,7 @@
             $ing_item .= "\n";
         $ingriditnts .= $ing_item;
     }
-    $template = str_replace('{ingridients}', $ingriditnts, $template);
+    $template = str_replace('{list_ingridients}', $ingriditnts, $template);
 
     file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
 
