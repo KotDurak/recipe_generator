@@ -1,22 +1,28 @@
 <?php
 require_once  'phpQuery/phpQuery.php';
 
-$html = file_get_contents('http://html/');
+
+
+$html = file_get_contents('http://html/recipes/parse.html');
 $document = phpQuery::newDocument($html);
+$d = function($arg){
+    print '<pre>';
+    print_r($arg);
+    print '</pre>';
+};
 
-
-$cousines = $document->find('.ingridients')->find('li');
+$popuplar = $document->find('.parse-ing')->find('a');
 $types = array();
-foreach ($cousines as $c){
+foreach ($popuplar as $c){
     $item = pq($c);
-    $a = $item->find('a');
-    $href = $a->attr('href');
+    $href = $item->attr('href');
+    $name = $item->text();
+    $title = $item->attr('title');
     $index = substr(basename($href), 0, -5);
-    $src = $item->find('img')->attr('src');
     $types[$index] = array(
-        'href'   => $href,
-        'src'    => $src,
-        'title'  => trim($a->text())
+        'name'  => $name,
+        'title' => $title,
+        'href'  => $href
     );
 }
 /*

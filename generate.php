@@ -4,6 +4,9 @@
 
     $cousines = require_once 'counsines.php';
     $category_array = require_once ('category.php');
+    $popular_array = require_once ('popular.php');
+    $ingriditnts_array = require_once 'ingridients.php';
+
 
     function print_pre($args){
         print '<pre>';
@@ -15,8 +18,6 @@
         return file_get_contents('templates/' . $tpl . '.html');
     }
 
-    print_pre($_POST);
-    die();
 
     function num2word($num, $words)
     {
@@ -45,8 +46,8 @@
 
 
 
-
-    $template = file_get_contents('templates/0templates.html');
+    //старый шаблон 0templates/html
+    $template = file_get_contents('templates/1templates.html');
     $recipe_name = 'omlet-s-syrom';
     $recipe_name_new = trim($_POST['name']);
 
@@ -80,7 +81,6 @@
      * Установка основного типа
     */
 
-    print_pre($category_array); die();
     $cat_tpl = getTemplate('category');
     $main_cat = str_replace('{categ_title}', $category_array[$_POST['type']]['title'], $cat_tpl);
     $main_cat = str_replace('{categ_href}',  $category_array[$_POST['type']]['href'], $main_cat);
@@ -96,6 +96,8 @@
     $categs_tpl = '';
 
     $i = 1;
+
+
     foreach ($_POST['types'] as $type){
         $item = str_replace('{categ_title}',$category_array[$type]['title'] , $cat_tpl);
         $item = str_replace('{categ_href}', $category_array[$type]['href'], $item);
@@ -109,6 +111,25 @@
     }
     $template = str_replace('{categories}', $categs_tpl, $template);
 
+    /**
+     * Работа с остальными видами категорий
+    */
+    $count_popuplar = count($_POST['popuplar']);
+    $popular_tpl = '';
+    $i = 1;
+
+    foreach ($_POST['popuplar'] as $type){
+
+        $item = str_replace('{categ_title}',$popular_array[$type]['title'] , $cat_tpl);
+        $item = str_replace('{categ_href}', $popular_array[$type]['href'], $item);
+        $item = str_replace('{categ_name}', $popular_array[$type]['name'], $item);
+        if($i != $count_popuplar){
+            $item .= ',' . "\n";
+        }
+        $popular_tpl .= $item;
+        $i++;
+    }
+    $template = str_replace('{popular}', $popular_tpl, $template);
 
     /**
      * Работа со времеем приготовления
