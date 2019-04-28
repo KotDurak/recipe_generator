@@ -6,3 +6,15 @@
 .ing-item{
     margin-bottom: 10px;
 }
+
+.selects{
+    display: flex;
+}
+
+.selects label{
+    display: block;
+}
+
+#popular{
+    height: 146px;
+}

@@ -59,22 +59,73 @@
     <label for="rate-count">Количество оценок</label>
     <input type="text" name="rate-count" id="rate-count">
     <br> <br>
-    <div class="cousines" style="margin-bottom: 5px">
-        <label class="hide" style="vertical-align: top;">Кухни мира</label>
-        <select name="cousines[]" id="cous"  style="height: 400px;" multiple>
-            <?php foreach ($types as $idx => $cousine):  ?>
-                <option value="<?= $idx?>"><?= $cousine['title']; ?></option>
-            <?php endforeach; ?>
-        </select>
+    <div class="selects">
+        <div class="cousines" style="margin-bottom: 5px">
+            <label class="hide" style="vertical-align: top;">Кухни мира</label>
+            <select name="cousines[]" id="cous"  style="height: 400px;" multiple>
+                <?php foreach ($types as $idx => $cousine):  ?>
+                    <option value="<?= $idx?>"><?= $cousine['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="types-multi">
+            <label style="vertical-align: top;" for="types">Категория</label>
+            <select style="height: 325px" name="types[]" id="types" multiple>
+                <?php foreach (require ('category.php')as $val => $cat): ?>
+                    <option value="<?= $val ?>"><?= $cat['name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="popular">
+            <label for="popular">По популярности</label>
+            <select name="popuplar[]" id="popular" multiple>
+                <?php foreach ( require ('popular.php') as $val => $item): ?>
+                    <option value="<?php echo $val; ?>"><?php echo $item['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="ingridients">
+            <label for="ingridients">По ингридиентам</label>
+            <select name="ingridients[]" id="ingridients" multiple style="height: 224px;">
+                <?php foreach(require ('ingridients.php')  as $val => $item): ?>
+                    <option value="<?php echo $val; ?>"><?php echo $item['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="reason">
+            <label for="reason">По поводу</label>
+            <select name="reason[]" id="reason" multiple style="height: 124px;">
+                <?php foreach(require 'reason.php' as $val => $item): ?>
+                    <option value="<?php echo $val; ?>"><?php echo $item['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="price">
+            <label for="price">По цене</label>
+            <select name="price[]" id="price" multiple>
+                <?php foreach(require 'price.php' as $val => $item): ?>
+                    <option value="<?php echo $val; ?>"><?php echo $item['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="holidays">
+            <label for="holidays">В праздгики</label>
+            <select name="holidays[]" id="holidays" multiple style="height: 224px;">
+                <?php foreach(require 'holidays.php' as $val => $item): ?>
+                    <option value="<?php echo $val; ?>"><?php echo $item['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="drinks">
+            <label for="drinks">Напитки</label>
+            <select name="drinks[]" id="drinks" multiple>
+                <?php foreach(require 'drinks.php' as $val => $item ): ?>
+                    <option value="<?php echo $val; ?>"><?php echo $item['title']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
-    <div class="types-multi">
-        <label style="vertical-align: top;" for="types">Типы</label>
-        <select style="height: 325px" name="types[]" id="types" multiple>
-            <?php foreach (require ('category.php')as $val => $cat): ?>
-                <option value="<?= $val ?>"><?= $cat['name'] ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
+
     <label for="items-count">Количество порций</label>
     <input type="text" name="items-count" id="items-count" value="6">
 

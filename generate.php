@@ -1,6 +1,6 @@
 <?php
     require_once  'phpQuery/phpQuery.php';
-    require_once  'recipes.php';
+   // require_once  'recipes.php';
 
     $cousines = require_once 'counsines.php';
     $category_array = require_once ('category.php');
@@ -14,6 +14,9 @@
     function getTemplate($tpl){
         return file_get_contents('templates/' . $tpl . '.html');
     }
+
+    print_pre($_POST);
+    die();
 
     function num2word($num, $words)
     {
@@ -76,6 +79,8 @@
     /**
      * Установка основного типа
     */
+
+    print_pre($category_array); die();
     $cat_tpl = getTemplate('category');
     $main_cat = str_replace('{categ_title}', $category_array[$_POST['type']]['title'], $cat_tpl);
     $main_cat = str_replace('{categ_href}',  $category_array[$_POST['type']]['href'], $main_cat);
