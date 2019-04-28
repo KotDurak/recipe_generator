@@ -1,8 +1,6 @@
 <?php
 require_once  'phpQuery/phpQuery.php';
-
-
-
+/*
 $html = file_get_contents('http://html/recipes/parse.html');
 $document = phpQuery::newDocument($html);
 $d = function($arg){
@@ -24,7 +22,7 @@ foreach ($popuplar as $c){
         'title' => $title,
         'href'  => $href
     );
-}
+} */
 /*
 $json = json_encode($types);
 file_put_contents('reason',$json);

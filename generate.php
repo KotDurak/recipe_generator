@@ -3,10 +3,13 @@
    // require_once  'recipes.php';
 
     $cousines = require_once 'counsines.php';
-    $category_array = require_once ('category.php');
-    $popular_array = require_once ('popular.php');
+    $category_array = require_once 'category.php';
+    $popular_array = require_once 'popular.php';
     $ingriditnts_array = require_once 'ingridients.php';
-
+    $reason_array = require_once 'reason.php';
+    $price_array = require_once 'price.php';
+    $holidays_array = require_once 'holidays.php';
+    $drinks_array = require_once 'drinks.php';
 
     function print_pre($args){
         print '<pre>';
@@ -43,8 +46,6 @@
     $hours_words = array('час', 'часа', 'часов');
     $hours_minutes = array('минута', 'минуты', 'минут');
     $count_step = count($_POST['step']);
-
-
 
     //старый шаблон 0templates/html
     $template = file_get_contents('templates/1templates.html');
@@ -97,7 +98,6 @@
 
     $i = 1;
 
-
     foreach ($_POST['types'] as $type){
         $item = str_replace('{categ_title}',$category_array[$type]['title'] , $cat_tpl);
         $item = str_replace('{categ_href}', $category_array[$type]['href'], $item);
@@ -105,6 +105,8 @@
 
         if($i != $count_category){
             $item .= ',' . "\n";
+        } else{
+            $item .= '.';
         }
         $categs_tpl .= $item;
         $i++;
@@ -117,7 +119,6 @@
     $count_popuplar = count($_POST['popuplar']);
     $popular_tpl = '';
     $i = 1;
-
     foreach ($_POST['popuplar'] as $type){
 
         $item = str_replace('{categ_title}',$popular_array[$type]['title'] , $cat_tpl);
@@ -125,12 +126,108 @@
         $item = str_replace('{categ_name}', $popular_array[$type]['name'], $item);
         if($i != $count_popuplar){
             $item .= ',' . "\n";
+        } else{
+            $item .= '.';
         }
         $popular_tpl .= $item;
         $i++;
     }
     $template = str_replace('{popular}', $popular_tpl, $template);
 
+    $count = count($_POST['ingridients']);
+    $ingriditnts_tpl = '';
+    $i = 1;
+    foreach($_POST['ingridients'] as $type){
+        $item = str_replace('{categ_title}',$ingriditnts_array[$type]['title'] , $cat_tpl);
+        $item = str_replace('{categ_href}', $ingriditnts_array[$type]['href'], $item);
+        $item = str_replace('{categ_name}', $ingriditnts_array[$type]['name'], $item);
+        if($i != $count){
+            $item .= ',' . "\n";
+        } else{
+            $item .= '.';
+        }
+        $ingriditnts_tpl .= $item;
+        $i++;
+    }
+    $template = str_replace('{ingridients}', $ingriditnts_tpl, $template);
+
+    $count = count($_POST['reason']);
+    $reason_tpl = '';
+    $i = 1;
+    foreach($_POST['reason'] as $type){
+        $item = str_replace('{categ_title}',$reason_array[$type]['title'] , $cat_tpl);
+        $item = str_replace('{categ_href}', $reason_array[$type]['href'], $item);
+        $item = str_replace('{categ_name}', $reason_array[$type]['name'], $item);
+        if($i != $count){
+            $item .= ',' . "\n";
+        } else{
+            $item .= '.';
+        }
+        $reason_tpl .= $item;
+        $i++;
+    }
+    $template = str_replace('{reason}', $reason_tpl, $template);
+
+    $count = count($_POST['price']);
+    $price_tpl = '';
+    $i = 1;
+    foreach ($_POST['price'] as $type){
+        $item = str_replace('{categ_title}',$price_array[$type]['title'] , $cat_tpl);
+        $item = str_replace('{categ_href}', $price_array[$type]['href'], $item);
+        $item = str_replace('{categ_name}', $price_array[$type]['name'], $item);
+        if($i != $count){
+            $item .= ',' . "\n";
+        } else{
+            $item .= '.';
+        }
+        $price_tpl .= $item;
+        $i++;
+    }
+    $template = str_replace('{price}', $price_tpl, $template);
+
+    $count = count($_POST['holidays']);
+    $holidays_tpl = '';
+    $i = 1;
+    foreach($_POST['holidays'] as $type){
+        $item = str_replace('{categ_title}',$holidays_array[$type]['title'] , $cat_tpl);
+        $item = str_replace('{categ_href}', $holidays_array[$type]['href'], $item);
+        $item = str_replace('{categ_name}', $holidays_array[$type]['name'], $item);
+        if($i != $count){
+            $item .= ',' . "\n";
+        } else{
+            $item .= '.';
+        }
+        $holidays_tpl .= $item;
+        $i++;
+    }
+    $template = str_replace('{holidays}', $holidays_tpl, $template);
+
+    /**
+     * Работа с напитками
+    */
+    $dr_tpl = '';
+    if(isset($_POST['drinks']) && !empty($_POST['drinks'])){
+        $dr_tpl = getTemplate('drinks');
+        $count = count($_POST['drinks']);
+        $drinks_tpl = '';
+        $i = 1;
+        foreach ($_POST['drinks'] as $type){
+            $item = str_replace('{categ_title}',$drinks_array[$type]['title'] , $cat_tpl);
+            $item = str_replace('{categ_href}', $drinks_array[$type]['href'], $item);
+            $item = str_replace('{categ_name}', $drinks_array[$type]['name'], $item);
+            if($i != $count){
+                $item .= ',' . "\n";
+            } else{
+                $item .= '.';
+            }
+            $drinks_tpl .= $item;
+            $i++;
+        }
+        $drinks_tpl = str_replace('{drinks}', $drinks_tpl, $dr_tpl);
+        $template = str_replace('{drinks_template}', $drinks_tpl, $template);
+    } else{
+        $template = str_replace('{drinks_template}', '', $template);
+    }
     /**
      * Работа со времеем приготовления
     */
