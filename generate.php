@@ -21,7 +21,6 @@
         return file_get_contents('templates/' . $tpl . '.html');
     }
 
-
     function num2word($num, $words)
     {
         if(!$num){
@@ -68,10 +67,11 @@
     foreach ($_POST['cousines'] as $cous) {
         $item = str_replace('{cous_name}', $cousines[$cous]['title'], $cous_tpl);
         $item = str_replace('{cous_png}', $cousines[$cous]['src'], $item);
+        $item = str_replace('{7t}', str_repeat("\t",7), $item);
         if(count($_POST['cousines']) == $i)
              $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item);
         else
-            $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item) . ',' . "\n";
+            $item = str_replace('{cous_href}', $cousines[$cous]['href'], $item) . ',' . "\n" . str_repeat("\t", 7);
         $couses_tpl .= $item;
 
 
@@ -104,7 +104,7 @@
         $item = str_replace('{categ_name}', $category_array[$type]['name'], $item);
 
         if($i != $count_category){
-            $item .= ',' . "\n";
+            $item .= ',' . "\n" . str_repeat("\t", 6);
         } else{
             $item .= '.';
         }
@@ -125,7 +125,7 @@
         $item = str_replace('{categ_href}', $popular_array[$type]['href'], $item);
         $item = str_replace('{categ_name}', $popular_array[$type]['name'], $item);
         if($i != $count_popuplar){
-            $item .= ',' . "\n";
+            $item .= ',' . "\n" . str_repeat("\t", 6);
         } else{
             $item .= '.';
         }
@@ -142,7 +142,7 @@
         $item = str_replace('{categ_href}', $ingriditnts_array[$type]['href'], $item);
         $item = str_replace('{categ_name}', $ingriditnts_array[$type]['name'], $item);
         if($i != $count){
-            $item .= ',' . "\n";
+            $item .= ',' . "\n" .  str_repeat("\t", 6);
         } else{
             $item .= '.';
         }
@@ -159,7 +159,7 @@
         $item = str_replace('{categ_href}', $reason_array[$type]['href'], $item);
         $item = str_replace('{categ_name}', $reason_array[$type]['name'], $item);
         if($i != $count){
-            $item .= ',' . "\n";
+            $item .= ',' . "\n" .  str_repeat("\t", 6);
         } else{
             $item .= '.';
         }
@@ -176,7 +176,7 @@
         $item = str_replace('{categ_href}', $price_array[$type]['href'], $item);
         $item = str_replace('{categ_name}', $price_array[$type]['name'], $item);
         if($i != $count){
-            $item .= ',' . "\n";
+            $item .= ',' . "\n" .  str_repeat("\t", 7);
         } else{
             $item .= '.';
         }
@@ -193,7 +193,7 @@
         $item = str_replace('{categ_href}', $holidays_array[$type]['href'], $item);
         $item = str_replace('{categ_name}', $holidays_array[$type]['name'], $item);
         if($i != $count){
-            $item .= ',' . "\n";
+            $item .= ',' . "\n" .  str_repeat("\t", 7);
         } else{
             $item .= '.';
         }
@@ -216,7 +216,7 @@
             $item = str_replace('{categ_href}', $drinks_array[$type]['href'], $item);
             $item = str_replace('{categ_name}', $drinks_array[$type]['name'], $item);
             if($i != $count){
-                $item .= ',' . "\n";
+                $item .= ',' . "\n" .  str_repeat("\t", 7);
             } else{
                 $item .= '.';
             }
@@ -265,7 +265,7 @@
         $step = str_replace('{recipe}', $recipe_name_new, $step);
         $step = str_replace('{step_text}', $_POST['step'][$i], $step);
         $step = str_replace('{step_title}', $_POST['title'][$i], $step);
-        $steps .= $step . "\n";
+        $steps .= $step . "\n{7t}";
     }
     $template = str_replace('{steps}', $steps, $template);
 
@@ -294,7 +294,9 @@
             $r = 'off';
         }
         $str = str_replace('{rating_type}', $r, $star_tpl);
-        $str .= "\n";
+        if($i != 10){
+            $str .= "\n" . str_repeat("\t", 5);
+        }
         $stars_list .= $str;
     }
     $template = str_replace('{rating_stars}', $stars_list, $template);
@@ -312,10 +314,16 @@
         $ing_item = str_replace('{ing_value}', $_POST['ing-count'][$i], $ing_item);
         $ing_item = str_replace('{ing_type}', $_POST['ing-type'][$i], $ing_item);
         if($i != $count_ing)
-            $ing_item .= "\n";
+            $ing_item .= "\n" . '{7t}';
         $ingriditnts .= $ing_item;
     }
     $template = str_replace('{list_ingridients}', $ingriditnts, $template);
+
+
+    $template =preg_replace_callback('/{([\d]+?)(t|n)}/', function($matches){
+        $t = $matches[2] == 't' ? "\t" : "\n";
+        return str_repeat($t, $matches[1]);
+    }, $template);
 
     file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
 
