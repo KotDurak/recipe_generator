@@ -25,7 +25,7 @@
     <br>
     <input type="submit" value="Скачать картинки">
 </form>
-
+<a href="pagination.php">Пагиниция</a>
 <h3>Генерация файла</h3>
 <form action="generate.php" method="post">
     <label for="name">Название (на английском)</label>
@@ -157,7 +157,10 @@
     <?php for ($i = 1; $i <= 10; $i++): ?>
         <div data-step="<?= $i; ?>" id="fields-step<?= $i ?>">
             <label for="step[<?= $i; ?>]">Шаг <?= $i; ?></label>
+            <!--
             <input type="text" name="step[<?= $i; ?>]" id="step[<?= $i; ?>]" placeholder="Название шага">
+            -->
+            <textarea name="step[<?= $i; ?>]" id="step[<?= $i; ?>]" placeholder="Название шага"></textarea>
             <input type="text" name="title[<?= $i ?>]" placeholder="Атрибуты alt и title">
             <br><br>
         </div>

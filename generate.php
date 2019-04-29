@@ -42,6 +42,8 @@
             }
         }
     }
+    print_pre($_POST);die();
+
     $hours_words = array('час', 'часа', 'часов');
     $hours_minutes = array('минута', 'минуты', 'минут');
     $count_step = count($_POST['step']);
