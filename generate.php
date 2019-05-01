@@ -42,8 +42,8 @@
             }
         }
     }
-    print_pre($_POST);die();
-
+	
+	
     $hours_words = array('час', 'часа', 'часов');
     $hours_minutes = array('минута', 'минуты', 'минут');
     $count_step = count($_POST['step']);
@@ -307,11 +307,15 @@
      * Заполняем ингридиенты;
     */
     $count_ing = count($_POST['ing-name']);
+    $count_ing = count($_POST['ing-name']);
     $ingriditnts = '';
     $ing_tpl = getTemplate('ingridient');
 
 
     for($i = 1; $i <= $count_ing; $i++){
+		if(empty($_POST['ing-name'][$i])){
+			continue;
+		}
         $ing_item = str_replace('{ing_name}', $_POST['ing-name'][$i], $ing_tpl);
         $ing_item = str_replace('{ing_value}', $_POST['ing-count'][$i], $ing_item);
         $ing_item = str_replace('{ing_type}', $_POST['ing-type'][$i], $ing_item);
