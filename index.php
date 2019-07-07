@@ -153,6 +153,10 @@
     <br>
     <a href="#" id="ing-add">Добавить ингридиент</a>
     <a href="#" id="ing-del">Удалить ингридиент</a>
+    <br><br>
+    <button id="autocomplete-step">Автозаполнение шагов</button>
+    <input type="text" name="source" id="source" placeholder="url источника">
+    <br>
     <div class="steps">
     <?php for ($i = 1; $i <= 10; $i++): ?>
         <div data-step="<?= $i; ?>" id="fields-step<?= $i ?>">

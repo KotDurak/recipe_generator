@@ -80,4 +80,35 @@ $(function () {
         }
         $('#ing-del').trigger('click');
     });
+
+    $('#autocomplete-step').on('click', function(e){
+       e.preventDefault();
+       var url =  $('#source').val();
+       if(!url){
+           alert('Введите url');
+           return;
+       }
+
+       $.ajax({
+          url: 'services/autocomplete-step.php',
+          type:'post',
+           dataType:'json',
+           data:{
+              url:url
+           },
+           success:function(data){
+              for(var i in data){
+                  var st_number =    parseInt(i) + 1;
+                  var step = data[i];
+                  var D_step = $('[data-step="'+st_number+'"]');
+                  if(D_step.length == 0){
+                      $('#add-step').trigger('click');
+                      D_step = $('[data-step="'+st_number+'"]');
+                  }
+                  D_step.find('textarea').val(data[i]['instruction']);
+                  D_step.find('input').val(data[i]['alt']);
+                }
+           }
+       });
+    });
 });
