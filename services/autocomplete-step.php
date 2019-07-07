@@ -17,6 +17,7 @@ if($steps->length != 0){
     $steps = $steps->find('.content_step');
     foreach ($steps as $step){
         $s = pq($step);
+        $s->find('noindex')->remove();
         foreach ($s->find('.instruction') as $i){
             $i = pq($i);
             $text = $i->text();
@@ -41,6 +42,7 @@ if($steps->length != 0){
            continue;
        }
        $s = pq($step);
+       $s->find('noindex')->remove();
        $li = $s->find('ul')->find('li')[0];
        $alt = $s->find('img')[0]->attr('alt');
        $steps_array[] = [
