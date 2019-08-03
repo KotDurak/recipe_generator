@@ -260,7 +260,12 @@
     $template = str_replace('{seo_hours}', $seo_hours, $template);
     $template = str_replace('{seo_minutes}', $seo_minutes, $template);
 
-    $step_tpl = getTemplate('step');
+    if(isset($_POST['without-images']) && !empty($_POST['without-images'])){
+        $step_tpl = getTemplate('step_no_images');
+    } else{
+        $step_tpl = getTemplate('step');
+    }
+
 
     /**
      * Работа с шагами;
@@ -335,13 +340,9 @@
         return str_repeat($t, $matches[1]);
     }, $template);
 
-    if(isset($_POST['without-images']) && $_POST['without-images'] == 1){
-        $document = phpQuery::newDocument($template);
-        $template =  $document->find('.content_step a')->remove();
-        file_put_contents('recipes/' . $recipe_name_new.'.html', $document);
-    } else{
-        file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
-    }
+
+    file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
+
 
 
 
