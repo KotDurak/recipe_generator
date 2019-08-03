@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b41e4d9e-60f3-446c-93b5-316786ad98e0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/step_no_images.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generate.php" afterPath="$PROJECT_DIR$/generate.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/recipes/calat-iz-chereshkovogo-seldereya.html" afterPath="$PROJECT_DIR$/recipes/calat-iz-chereshkovogo-seldereya.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,8 +28,8 @@
       <file leaf-file-name="generate.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="265" column="17" lean-forward="false" selection-start-line="265" selection-start-column="8" selection-end-line="265" selection-end-column="17" />
+            <state relative-caret-position="364">
+              <caret line="266" column="11" lean-forward="true" selection-start-line="266" selection-start-column="11" selection-end-line="266" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -78,8 +78,8 @@
       <file leaf-file-name="1templates.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/1templates.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="190" column="40" lean-forward="true" selection-start-line="189" selection-start-column="24" selection-end-line="190" selection-end-column="40" />
+            <state relative-caret-position="223">
+              <caret line="189" column="273" lean-forward="true" selection-start-line="189" selection-start-column="24" selection-end-line="189" selection-end-column="273" />
               <folding />
             </state>
           </provider>
@@ -110,6 +110,7 @@
       <find>document</find>
       <find>phpQuery</find>
       <find>step</find>
+      <find>without</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -261,12 +262,12 @@
       <workItem from="1562487137353" duration="56000" />
       <workItem from="1563696394542" duration="680000" />
       <workItem from="1563711724371" duration="165000" />
-      <workItem from="1564827974219" duration="7669000" />
+      <workItem from="1564827974219" duration="8780000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124535000" />
+    <option name="totallyTimeSpent" value="125646000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
@@ -552,22 +553,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/1templates.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="190" column="40" lean-forward="true" selection-start-line="189" selection-start-column="24" selection-end-line="190" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/services/autocomplete-step.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="57" column="27" lean-forward="true" selection-start-line="57" selection-start-column="27" selection-end-line="57" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/step.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -592,10 +577,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/1templates.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="189" column="273" lean-forward="true" selection-start-line="189" selection-start-column="24" selection-end-line="189" selection-end-column="273" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/autocomplete-step.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="57" column="27" lean-forward="true" selection-start-line="57" selection-start-column="27" selection-end-line="57" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/generate.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="265" column="17" lean-forward="false" selection-start-line="265" selection-start-column="8" selection-end-line="265" selection-end-column="17" />
+        <state relative-caret-position="364">
+          <caret line="266" column="11" lean-forward="true" selection-start-line="266" selection-start-column="11" selection-end-line="266" selection-end-column="11" />
           <folding />
         </state>
       </provider>

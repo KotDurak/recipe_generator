@@ -261,6 +261,8 @@
     $template = str_replace('{seo_minutes}', $seo_minutes, $template);
 
     if(isset($_POST['without-images']) && !empty($_POST['without-images'])){
+        $a_remove = '<a href="http://rf-stone.ru/images/recipes/'. $recipe_name_new .'/0-1.JPG" class="highslide-image"><img   alt="Ингредиенты приготовления {second_title}" src="http://rf-stone.ru/images/recipes/'.$recipe_name_new.'/0.JPG" width="320" height="240" align="right" /></a>';
+        $template =  preg_replace('{<a.+0-1.JPG.+</a>}', '', $template);
         $step_tpl = getTemplate('step_no_images');
     } else{
         $step_tpl = getTemplate('step');
