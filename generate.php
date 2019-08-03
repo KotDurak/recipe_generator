@@ -17,6 +17,8 @@
         print '</pre>';
     }
 
+
+
     function getTemplate($tpl){
         return file_get_contents('templates/' . $tpl . '.html');
     }
@@ -50,6 +52,8 @@
 
     //старый шаблон 0templates/html
     $template = file_get_contents('templates/1templates.html');
+
+
     $recipe_name = 'omlet-s-syrom';
     $recipe_name_new = trim($_POST['name']);
 
@@ -331,7 +335,15 @@
         return str_repeat($t, $matches[1]);
     }, $template);
 
-    file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
+    if(isset($_POST['without-images']) && $_POST['without-images'] == 1){
+        $document = phpQuery::newDocument($template);
+        $template =  $document->find('.content_step a')->remove();
+        file_put_contents('recipes/' . $recipe_name_new.'.html', $document);
+    } else{
+        file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
+    }
+
+
 
     /**
      * Сформируем html для категорийной страницы;
