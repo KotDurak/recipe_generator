@@ -58,6 +58,7 @@ if($steps->length == 0){
  foreach ($steps as $step){
      $s = pq($step);
      $s->find('noindex')->remove();
+     $s->find('strong')->remove();
 
      $steps_array[] = [
          'instruction' =>   $s->text(),
