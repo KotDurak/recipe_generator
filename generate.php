@@ -17,6 +17,8 @@
         print '</pre>';
     }
 
+
+
     function getTemplate($tpl){
         return file_get_contents('templates/' . $tpl . '.html');
     }
@@ -50,6 +52,8 @@
 
     //старый шаблон 0templates/html
     $template = file_get_contents('templates/1templates.html');
+
+
     $recipe_name = 'omlet-s-syrom';
     $recipe_name_new = trim($_POST['name']);
 
@@ -256,7 +260,14 @@
     $template = str_replace('{seo_hours}', $seo_hours, $template);
     $template = str_replace('{seo_minutes}', $seo_minutes, $template);
 
-    $step_tpl = getTemplate('step');
+    if(isset($_POST['without-images']) && !empty($_POST['without-images'])){
+        $a_remove = '<a href="http://rf-stone.ru/images/recipes/'. $recipe_name_new .'/0-1.JPG" class="highslide-image"><img   alt="Ингредиенты приготовления {second_title}" src="http://rf-stone.ru/images/recipes/'.$recipe_name_new.'/0.JPG" width="320" height="240" align="right" /></a>';
+        $template =  preg_replace('{<a.+0-1.JPG.+</a>}', '', $template);
+        $step_tpl = getTemplate('step_no_images');
+    } else{
+        $step_tpl = getTemplate('step');
+    }
+
 
     /**
      * Работа с шагами;
@@ -331,7 +342,11 @@
         return str_repeat($t, $matches[1]);
     }, $template);
 
+
     file_put_contents('recipes/' . $recipe_name_new.'.html', $template);
+
+
+
 
     /**
      * Сформируем html для категорийной страницы;

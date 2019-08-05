@@ -28,6 +28,9 @@
 <a href="pagination.php">Пагиниция</a>
 <h3>Генерация файла</h3>
 <form action="generate.php" method="post">
+    <label for="without-images">Список этапа без картинок</label>
+    <input type="checkbox" name="without-images" id="without-images" value="1">
+    <br/><br/>
     <label for="name">Название (на английском)</label>
     <input type="text" name="name" id="name">
 

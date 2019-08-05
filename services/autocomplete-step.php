@@ -53,4 +53,18 @@ if($steps->length != 0){
    }
 
 }
+if($steps->length == 0){
+ $steps = $document->find('[itemprop="recipeInstructions"]');
+ foreach ($steps as $step){
+     $s = pq($step);
+     $s->find('noindex')->remove();
+     $s->find('strong')->remove();
+
+     $steps_array[] = [
+         'instruction' =>   $s->text(),
+         'alt'    => $alt
+     ];
+ }
+}
+
 echo json_encode($steps_array);

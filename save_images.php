@@ -7,18 +7,22 @@ function print_pre($arg){
     print  '</pre>';
 }
 
-function save_image($url, $folder){
+function save_image($url, $folder, $name = null){
 	if(!$url){
-		return;
+		return false;
 	}
     $ch = curl_init($url);
-    $fp = fopen($folder . DIRECTORY_SEPARATOR . basename($url), 'wb');
+	if(!is_null($name)){
+        $fp = fopen($folder . DIRECTORY_SEPARATOR . $name, 'wb');
+    }else{
+        $fp = fopen($folder . DIRECTORY_SEPARATOR . basename($url), 'wb');
+    }
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_exec($ch);
     curl_close($ch);
     fclose($fp);
-
+    return true;
 }
 
 
@@ -36,12 +40,18 @@ $result_photo = $document->find('img.result-photo');
 $final_url = $result_photo->attr('src');
 $final_1_url = $result_photo->parent()->attr('href');
 
-save_image($final_url, $_POST['folder']);
-save_image($final_1_url, $_POST['folder']);
-
+$f1 = save_image($final_url, $_POST['folder']);
+$f2 = save_image($final_1_url, $_POST['folder']);
+if(!$f1 || !$f2){
+    $result_photos = $document->find('.entry-content')->find('img');
+    foreach ($result_photos as $rp){
+        $src = pq($rp)->attr('src');
+        save_image($src, $_POST['folder'], 'Final.JPG');
+        save_image($src, $_POST['folder'], 'Final-1.JPG');
+    }
+}
 $imgs = $document->find('img');
 foreach ($imgs as $img){
-    $src = pq($img)->attr('src');
     if(preg_match('/\/0\.JPG$/', $src) && empty($images)){
         save_image(pq($img)->parent()->attr('href'), $_POST['folder']);
         save_image($src, $_POST['folder']);
@@ -52,7 +62,6 @@ foreach ($imgs as $img){
 		save_image(pq($img)->parent()->attr('href'), $_POST['folder']);
 		save_image($src, $_POST['folder']);
 	}
-
 }
 
 
