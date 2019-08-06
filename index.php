@@ -144,7 +144,7 @@
     </select>
 
     <h3>Ингридиенты</h3>
-    <textarea  name="" id="ing-before-parse" cols="50" rows="10"></textarea>
+    <textarea  name="" id="ing-before-parse" cols="50" rows="10">–</textarea>
     <button id="parsre-ing">Автозаполнение ингридиентов</button><br>
     <div class="ingridients" style="border: 2px solid red;">
         <div class="ing-item" data-ing="1">
