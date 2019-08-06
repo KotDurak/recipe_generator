@@ -7,6 +7,7 @@ function print_pre($arg){
     print  '</pre>';
 }
 
+
 function save_image($url, $folder, $name = null){
 	if(!$url){
 		return false;
@@ -23,7 +24,8 @@ function save_image($url, $folder, $name = null){
     curl_close($ch);
     fclose($fp);
     return true;
-}
+} 
+
 
 
 if(!is_dir($_POST['folder'])){
@@ -42,16 +44,18 @@ $final_1_url = $result_photo->parent()->attr('href');
 
 $f1 = save_image($final_url, $_POST['folder']);
 $f2 = save_image($final_1_url, $_POST['folder']);
-if(!$f1 || !$f2){
-    $result_photos = $document->find('.entry-content')->find('img');
+if(!$f1 && !$f2){
+    $result_photos = $document->find('.entry-content')->find('img:first');
     foreach ($result_photos as $rp){
         $src = pq($rp)->attr('src');
         save_image($src, $_POST['folder'], 'Final.JPG');
         save_image($src, $_POST['folder'], 'Final-1.JPG');
+		break;
     }
 }
 $imgs = $document->find('img');
 foreach ($imgs as $img){
+	$src = pq($img)->attr('src');
     if(preg_match('/\/0\.JPG$/', $src) && empty($images)){
         save_image(pq($img)->parent()->attr('href'), $_POST['folder']);
         save_image($src, $_POST['folder']);
@@ -64,7 +68,7 @@ foreach ($imgs as $img){
 	}
 }
 
-
+die();
 
 
 foreach ($images as $elem){
