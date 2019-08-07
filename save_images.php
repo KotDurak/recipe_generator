@@ -68,7 +68,7 @@ foreach ($imgs as $img){
 	}
 }
 
-die();
+
 
 
 foreach ($images as $elem){
